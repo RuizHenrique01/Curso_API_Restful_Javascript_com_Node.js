@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import CreateUserService from '../services/CreateUserService';
 import ListUserService from '../services/ListUserService';
+import { hash } from 'bcryptjs';
 
 export default class UsersController {
     public async index(
@@ -22,9 +23,11 @@ export default class UsersController {
 
         const createUserService = new CreateUserService();
 
+        const hashedPassword = await hash(password, 8);
+
         const user = await createUserService.execute({
             email,
-            password,
+            password: hashedPassword,
             name,
         });
 
