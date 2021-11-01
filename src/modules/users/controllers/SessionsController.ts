@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { getCustomRepository } from 'typeorm';
 import CreateSessionsService from '../services/CreateSessionsService';
 
 class SessionsController {
@@ -9,9 +8,7 @@ class SessionsController {
     ): Promise<Response> {
         const { email, password } = request.body;
 
-        const createSessionsService = getCustomRepository(
-            CreateSessionsService,
-        );
+        const createSessionsService = new CreateSessionsService();
 
         const user = await createSessionsService.execute({
             email,

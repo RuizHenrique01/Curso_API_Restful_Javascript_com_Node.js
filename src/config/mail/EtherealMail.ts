@@ -41,6 +41,9 @@ export default class EtherealMail {
                 user: account.user,
                 pass: account.pass,
             },
+            tls: {
+                rejectUnauthorized: false,
+            },
         });
 
         const message = await transport.sendMail({
@@ -56,7 +59,7 @@ export default class EtherealMail {
             html: await handlebarsMailTemplate.parse(templateData),
         });
 
-        console.log('Message sent: %s', message.messageId);
+        console.log('Message sent: %s', message?.messageId);
         console.log('Preview URL: %s', nodemailer.getTestMessageUrl(message));
     }
 }
